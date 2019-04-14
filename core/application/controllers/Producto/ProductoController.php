@@ -166,7 +166,10 @@ class ProductoController extends ControllerBase{
     // Fórmula #1
     function calcularPublicacionBasica($precioBase, $peso, $trm) {
         $comision = 0;
+        $valorComision= 0;
         $comisionMercadoLibre = 0.16;
+        $valorComisionML = 0;
+        $formulaParte1 = 0;
         $formula = 0;
 
         if ($peso > 0 && $peso <= 10) {
@@ -185,14 +188,23 @@ class ProductoController extends ControllerBase{
             $comision = 0.55;
         }
 
-        $formula = (($precioBase + ($peso * 10) + $comision) * $trm) + $comisionMercadoLibre;
+        // comisión básica por peso sobre valor base:
+        $valorComision = ($precioBase * $comision);
+        $formulaParte1 = (($precioBase + ($peso * 10) + $valorComision) * $trm);
+        $valorComisionML = $formulaParte1 * $comisionMercadoLibre;
+        $formula = $formulaParte1 + $valorComisionML;
+
         return $formula;
     }
 
     // Fórmula #2
     function calcularPublicacionPremium($precioBase, $peso, $trm) {
+
         $comision = 0;
+        $valorComision= 0;
         $comisionMercadoLibre = 0.14;
+        $valorComisionML = 0;
+        $formulaParte1 = 0;
         $formula = 0;
 
         if ($peso > 0 && $peso <= 10) {
@@ -211,7 +223,12 @@ class ProductoController extends ControllerBase{
             $comision = 0.5;
         }
 
-        $formula = (($precioBase + ($peso * 10) + $comision) * $trm) + $comisionMercadoLibre;
+        // comisión básica por peso sobre valor base:
+        $valorComision = ($precioBase * $comision);
+        $formulaParte1 = (($precioBase + ($peso * 10) + $valorComision) * $trm);
+        $valorComisionML = $formulaParte1 * $comisionMercadoLibre;
+        $formula = $formulaParte1 + $valorComisionML;
+
         return $formula;
     }
 

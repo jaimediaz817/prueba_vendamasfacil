@@ -14,30 +14,38 @@ class FormulasTest extends TestCase
 {
     // TODO: Test para la fórmula de la publicación básica
     public function testCalcularPublicacionBasica() {
-        $precioUsd      = 9.99;
-        $pesoProducto   = 1.5;
-        $valorTrm       = 3118.75;
-        $this->assertEquals($this->calcularPublicacionBasica($precioUsd, $pesoProducto, $valorTrm), 78405.535);
+        $precioUsd      = 32;
+        $pesoProducto   = 6;
+        $valorTrm       = 3120;
+        $this->assertEquals($this->calcularPublicacionBasica($precioUsd, $pesoProducto, $valorTrm), 350338.56);
     }
 
     // TODO: Test para la fórmula de la publicación premium
     public function testCalcularPublicacionPremium() {
-        $precioUsd      = 9.99;
-        $pesoProducto   = 15;
-        $valorTrm       = 3118.75;
-        $this->assertEquals($this->calcularPublicacionPremium($precioUsd, $pesoProducto, $valorTrm), 499592.7025);
+        $precioUsd      = 32;
+        $pesoProducto   = 6;
+        $valorTrm       = 3120;
+        $this->assertEquals($this->calcularPublicacionPremium($precioUsd, $pesoProducto, $valorTrm), 338607.36);
     }    
 
     // Test para redonear al 900 más cercano
-    public function testRedondearAl900MasCercano() {
-        $valorAredondear = 78405.535;
-        $this->assertEquals($this->redondearAl900MasCercano($valorAredondear), 78900);
+    public function testRedondearAl900MasCercanoBasico() {
+        $valorAredondear = 350338.56;
+        $this->assertEquals($this->redondearAl900MasCercano($valorAredondear), 349900);
     }
+
+    public function testRedondearAl900MasCercanoPremium() {
+        $valorAredondear = 338607.36;
+        $this->assertEquals($this->redondearAl900MasCercano($valorAredondear), 338900);
+    }    
 
     // Fórmula #1
     function calcularPublicacionBasica($precioBase, $peso, $trm) {
         $comision = 0;
+        $valorComision= 0;
         $comisionMercadoLibre = 0.16;
+        $valorComisionML = 0;
+        $formulaParte1 = 0;
         $formula = 0;
 
         if ($peso > 0 && $peso <= 10) {
@@ -56,14 +64,23 @@ class FormulasTest extends TestCase
             $comision = 0.55;
         }
 
-        $formula = (($precioBase + ($peso * 10) + $comision) * $trm) + $comisionMercadoLibre;
+        // comisión básica por peso sobre valor base:
+        $valorComision = ($precioBase * $comision);
+        $formulaParte1 = (($precioBase + ($peso * 10) + $valorComision) * $trm);
+        $valorComisionML = $formulaParte1 * $comisionMercadoLibre;
+        $formula = $formulaParte1 + $valorComisionML;
+
         return $formula;
     }
 
     // Fórmula #2
     public function calcularPublicacionPremium($precioBase, $peso, $trm) {
+
         $comision = 0;
+        $valorComision= 0;
         $comisionMercadoLibre = 0.14;
+        $valorComisionML = 0;
+        $formulaParte1 = 0;
         $formula = 0;
 
         if ($peso > 0 && $peso <= 10) {
@@ -82,7 +99,12 @@ class FormulasTest extends TestCase
             $comision = 0.5;
         }
 
-        $formula = (($precioBase + ($peso * 10) + $comision) * $trm) + $comisionMercadoLibre;
+        // comisión básica por peso sobre valor base:
+        $valorComision = ($precioBase * $comision);
+        $formulaParte1 = (($precioBase + ($peso * 10) + $valorComision) * $trm);
+        $valorComisionML = $formulaParte1 * $comisionMercadoLibre;
+        $formula = $formulaParte1 + $valorComisionML;
+
         return $formula;
     }
 
