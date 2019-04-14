@@ -153,6 +153,14 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
     height: auto;
 }
 
+.hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;

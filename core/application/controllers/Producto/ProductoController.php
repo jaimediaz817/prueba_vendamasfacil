@@ -52,21 +52,6 @@ class ProductoController extends ControllerBase{
     // Add
     public function addProductRequest($params=null) {
 
-        $uploadStatus = 0;
-        $textAction = "";
-        $countProductInitial = 0;
-        /* 
-        private $id;
-        private $nombres;
-        private $descripcion;
-        private $categoriaId;
-        private $peso;
-        private $cantidad;
-        private $precio;
-        private $tipoPublicacion;
-        private $estado;
-        private $fecha;
-        */
         // Product instance
         $product = new ProductoModel();
         $product->precio = 0;

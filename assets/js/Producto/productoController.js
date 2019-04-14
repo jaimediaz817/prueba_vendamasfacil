@@ -74,7 +74,7 @@
                         console.log("response: ", response);
                         if (response.res == 1 || response.res == true) {
                             console.log("add Product ok");
-                            alert("El producto se ha guardado correctamente");
+                            alert("El producto se ha guardado correctamente, ahora deberá publicarlo para que se muestre el precio COP en la vista de la tienda...");
                             // refresh
                             location.reload();
                         }
@@ -98,6 +98,7 @@
         }
     });
 
+    // Valida campos del formulario
     function validarCamposProducto() {
             // get data
             let nombres             = $("#nombres").val();
@@ -134,7 +135,8 @@
         }
         if ($("#tipoPublicacion").val() == 0) {
             flagValidaciones = false;
-            $(this).hasClass("is-invalid")
+            $(this).hasClass("is-invalid");
+            alert("Debe seleccionar el tipo de publicación del producto(BASICO O PREMIUM)");
         } else {
             $(this).hasClass("is-valid")
         }
@@ -149,32 +151,6 @@
             flagValidaciones = false;
         }        
         return flagValidaciones;
-    }
-
-     async function  getTRM(precio, peso, tipoPublicacion) {
-        let endpoint  = 'live';
-        let keySecret = '89dd481d423f920afcb058422d4e4f72';
-        let url       = 'http://apilayer.net/api/'+ endpoint + '?access_key=' + keySecret + '&currencies=COP&source=USD&format=1';
-        let trm = 0;
-        let precioCO = 0;
-
-        await $.ajax({
-            url: url,
-            dataType: 'jsonp',
-            success: function(json) {
-                // exchange rata data is stored in json.quotes
-                trm = json.quotes.USDGBP;
-
-                // calcular formula:
-                if (tipoPublicacion == "01") {
-                    precioCO = calularPublicacionBasica(precio, peso, trm).toFixed(2);
-                } else if (tipoPublicacion == "02") {
-                    precioCO = calularPublicacionPremium(precio, peso, trm).toFixed(2);
-                }                      
-            }
-        });
-
-        return precioCO;
     }
 
     // Retorna el TRM actual mediante la API
@@ -227,7 +203,6 @@
         return trm;
     }
 
-
     $(".refRequerido").blur( function(){
         console.log($(this).val())
         if ($(this).val() == '') {
@@ -279,7 +254,6 @@
 
     // Click Edit | Main action
     $("#editProduct").on("click", function() {
-
         let confirmEdit = confirm("¿Está seguro que desea llevar a cabo la edición del producto?")
         if (confirmEdit) {
             // get data

@@ -22,6 +22,11 @@
             <header>            
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">                    
                     <a class="navbar-brand" href="#">Dashboard | Tienda virtual</a>
+
+                    <?php if (isset($_SESSION['nickUser'])): ?>
+                        <?= "Bienvenido: ".$_SESSION['nickUser']; ?>
+                    <?php endif; ?>
+
                     <a href="<?php echo SINGLE_URL; ?>Login/signOutLogin" class="btn btn-secondary">&nbsp;Logout (salir de la plataforma)</a>
                     <!-- <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLogin">
                         <i class="icon-plus"></i>&nbsp;Logout (salir de la plataforma)
@@ -62,9 +67,9 @@
                                     <canvas id="publicacionesDia" width="600" height="400" class="grafico-barras"></canvas>
                                 </div>                                
                             </div>
-
-                            <div class="col-lg-12">
-                                <h1 class="h2">VENDA + FACIL - DASHBOARD <?php //echo $this->test; ?></h1>
+                            <hr class="hr">
+                            <div class="col-lg-12 mt-2">
+                                <h1 class="h2">VENDA + FACIL - Listado de productos en la tienda (Gestionar) <?php //echo $this->test; ?></h1>
                                 <p>Crud of Categories</p>
                                 <div class="container mx-0 px-0">
                                     <div class="row">
