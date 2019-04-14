@@ -44,7 +44,7 @@
                             <a class="active" href="<?php echo SINGLE_URL; ?>Dashboard/index">Categorías (Producto)</a>
                         </li>
                         <li>
-                            <a class="" href="<?php echo SINGLE_URL; ?>Dashboard/index">Productos (gestión)</a>
+                            <a class="" href="<?php echo SINGLE_URL; ?>Producto/index">Productos (gestión)</a>
                         </li>
                     </ul>
                 </div>

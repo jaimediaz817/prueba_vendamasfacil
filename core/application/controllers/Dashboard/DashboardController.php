@@ -7,6 +7,7 @@ use camaleon\helpers\StringSecurityManager;
 //   M O D E L S
 use camaleon\models\UserModel;
 use camaleon\models\CategoriaModel;
+use camaleon\models\ProductoModel;
 
 //   S E S S I O N
 use camaleon\helpers\SessionApp;
@@ -32,11 +33,13 @@ class DashboardController extends ControllerBase{
 
 
         // PRODUCTOS (Pendiente cargar)
-
+        $productoModel = new ProductoModel();
+        $productoList = $productoModel->selectAllProducts();
 
         //*************************************************************** */
         // Render view
         $this->view->test = StringSecurityManager::encrypt("1234");
+        $this->view->productosList = $productoList;        
         $this->view->renderView($this, "index", "main");        
     }
 

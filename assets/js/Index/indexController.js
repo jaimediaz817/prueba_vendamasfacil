@@ -46,8 +46,11 @@
                     // ACCESS VALIDATE
                     if (response.res == "success" && response.statusLogin == 1) {
                         // Redireccionar a la dashboard
+                        alert("Credenciales correctas, ahora será redireccionado a la Dashboard (index) donde podrá ver los productos y las acciones básicas. Nótese el menú de la izquierda para acceder a las categorías y productos.")
                         window.location.href = URL_SINGLE + "Dashboard/index";
                         console.log(response);
+                    } else {
+                        alert("Credenciales inválidas, por favor intente de nuevo...");
                     }
                 },
                 error: function(err) {
@@ -56,5 +59,7 @@
             });
         }
     });
+
+
 
 })(jQuery);

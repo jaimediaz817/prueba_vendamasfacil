@@ -41,10 +41,10 @@
                             <a class="" href="<?php echo SINGLE_URL; ?>Dashboard/index">Dashboard (principal)</a>
                         </li>
                         <li>
-                            <a class="" href="<?php echo SINGLE_URL; ?>Dashboard/index">Categorías (Producto)</a>
+                            <a class="" href="<?php echo SINGLE_URL; ?>Dashboard/categorias">Categorías (Producto)</a>
                         </li>
                         <li>
-                            <a class="active" href="<?php echo SINGLE_URL; ?>Dashboard/index">Productos (gestión)</a>
+                            <a class="active" href="<?php echo SINGLE_URL; ?>Producto/index">Productos (gestión)</a>
                         </li>
                     </ul>
                 </div>
@@ -55,7 +55,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h1>VENDA + FACIL - PRODUCTOS</h1>
+                                <h1>VENDA + FACIL - PRODUCTOS <?php echo $x = round(407736.016)/1000*1000; echo "<br>"; echo round($x, -3); //imprime900 ?></h1>
 
                                 <div class="container mx-0 px-0">
                                     <div class="row">
@@ -69,13 +69,19 @@
                                                         <!-- NOMBRES -->
                                                         <div class="form-group">
                                                             <label for="categoryName">Nombre:</label>
-                                                            <input type="text" name="nombres" id="nombres" class="form-control">
+                                                            <input type="text" name="nombres" id="nombres" class="form-control refRequerido" required>
+                                                            <div class="invalid-feedback">
+                                                                Debe escribir un nombre de producto
+                                                            </div>
                                                         </div>
 
                                                         <!-- DESCRIPCIÓN -->
                                                         <div class="form-group">
                                                             <label for="categoryName">Descripción:</label>
-                                                            <input type="text" name="descripcion" id="descripcion" class="form-control">
+                                                            <input type="text" name="descripcion" id="descripcion" class="form-control refRequerido">
+                                                            <div class="invalid-feedback">
+                                                                Debe escribir una descripción breve del producto
+                                                            </div>
                                                         </div>
 
                                                         <!-- CATEGORIAS -->
@@ -85,6 +91,7 @@
                                                                 <div>No categories!</div>
                                                             <?php else: ?>
                                                                 <select class="selectpicker form-control" id="categoriasProducto">
+                                                                    <option value="0" selected>Seleccione una categoria</option>
                                                                     <?php foreach($this->categoriaList as $val) :?>                                                                
                                                                         <option value="<?= $val->cate_id_pk ?>"><?= $val->cate_nombres ?></option>
                                                                     <?php endforeach; ?>
@@ -97,14 +104,20 @@
                                                                 <!-- Peso -->
                                                                 <div class="form-group">
                                                                     <label for="peso">Peso:</label>
-                                                                    <input type="number" name="peso" id="peso" class="form-control">
+                                                                    <input type="number" name="peso" id="peso" class="form-control refRequerido">
+                                                                    <div class="invalid-feedback">
+                                                                        Debe ingresar un peso mínimo del producto y que NO sea un valor negativo
+                                                                    </div>                                                                    
                                                                 </div>
                                                             </div>
                                                             <div class="col-6">
                                                                 <!-- Cantidad -->
                                                                 <div class="form-group">
                                                                     <label for="cantidad">Cantidad:</label>
-                                                                    <input type="number" name="cantidad" id="cantidad" class="form-control">
+                                                                    <input type="number" name="cantidad" id="cantidad" class="form-control refRequerido">
+                                                                    <div class="invalid-feedback">
+                                                                        Debe ingrar la cantidad de productos
+                                                                    </div>                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -113,8 +126,12 @@
                                                             <div class="col-6">
                                                                 <!-- Precio -->
                                                                 <div class="form-group">
+                                                                    <i class="fas fa-dollar-sign"></i>
                                                                     <label for="precio">Precio:</label>
-                                                                    <input type="number" name="precio" id="precio" class="form-control">
+                                                                    <input type="number" name="precio" id="precio" class="form-control refRequerido">
+                                                                    <div class="invalid-feedback">
+                                                                        Debe ingresar un precio mínimo del producto en Dolares (USD)
+                                                                    </div>                                                                    
                                                                 </div>
                                                             </div>
 
@@ -123,6 +140,7 @@
                                                                 <div class="form-group">
                                                                     <label for="tipoPublicacion">Tipo de publicación:</label>
                                                                     <select class="selectpicker form-control" id="tipoPublicacion">
+                                                                        <option selected value="0">Seleccione un tipo de publicación</option>
                                                                         <option value="01">Básica</option>
                                                                         <option value="02">Premium</option>
                                                                     </select>
@@ -148,7 +166,7 @@
                                         </div>
                                         <div class="col-7">
                                         <?php if(empty($this->productoList)) :?>
-                                            <div>Array vacio</div>
+                                            <div>No hay productos creados en la base de datos</div>
                                         <?php else: ?>
                                             <table class="table table-dark">
                                                 <thead>
@@ -167,11 +185,19 @@
                                                         <tr>
                                                             <td><?= $val->prod_id_pk ?></td>
                                                             <td><?= $val->prod_nombres ?></td>
-                                                            <td><span>$ </span><?= $val->prod_precio_usd ?></td>
+                                                            <td><span>$ </span><?= $val->prod_precio_usd ?> <span class="small" style="color: #dc3545;"> USD</span></td>
                                                             <td><?= $val->nombreCategoria ?></td> 
                                                             <td>
-                                                                <a href="#" data-id="<?= $val->prod_id_pk;?>" class=" btn btn-success edit-product">Editar</a>
-                                                                <a href="#" data-id="<?= $val->prod_id_pk;?>" class="btn btn-danger delete-product">Eliminar</a>
+                                                                <a href="#" data-id="<?= $val->prod_id_pk;?>" class=" btn btn-success edit-product tipo-small">Editar</a>
+                                                                <a href="#" data-id="<?= $val->prod_id_pk;?>" class="btn btn-danger delete-product tipo-small">Eliminar/Finalizar</a>
+                                                                <?php if($val->prod_estado_publicacion == 0): ?>
+                                                                    <a href="#" data-id="<?= $val->prod_id_pk;?>" class="btn btn-primary activar-producto tipo-small">
+                                                                    <i class="fas fa-eye"></i> publicar
+                                                                    </a>
+                                                                <?php elseif($val->prod_estado_publicacion == 1): ?>
+                                                                    <a href="#" data-id="<?= $val->prod_id_pk;?>" class="btn btn-warning pausar-producto tipo-small">
+                                                                    <i class="fas fa-eye-slash"></i> Pusar</a>
+                                                                <?php endif; ?>
                                                             </td>
                                                             <td>
                                                                 <input type="hidden" id="idProd" value="<?= $val->prod_id_pk; ?>">

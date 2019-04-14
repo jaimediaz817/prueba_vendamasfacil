@@ -142,6 +142,17 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
     justify-content: space-between;
 }
 
+/* PRODUCTOS - LISTADO */
+.tipo-small {
+    font-size: 0.722rem;
+}
+
+/* GRAFICO */
+.chart-container {
+    width: 400px;
+    height: auto;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;

@@ -22,9 +22,17 @@
             <header>            
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">                    
                     <a class="navbar-brand" href="#">Home | Tienda virtual</a>
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLogin">
-                        <i class="icon-plus"></i>&nbsp;Login (acceso)
-                    </button>                    
+
+                    <!-- Valida login -->
+                    <?php if (!isset($_SESSION['nickUser'])): ?>                            
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLogin">
+                                <i class="icon-plus"></i>&nbsp;Login (acceso)
+                            </button>
+                    <?php else: ?>
+                            <?= "Bienvenido: ".$_SESSION['nickUser']; ?>
+                            <a href="<?php echo SINGLE_URL; ?>Login/signOutLogin" class="btn btn-secondary">&nbsp;Logout (salir de la plataforma)</a>                            
+                    <?php endif; ?>
+
                 </nav>                
             </header>
 
@@ -38,12 +46,12 @@
                                 Iniciar sesión
                             </a>
                         </li>
-                        <li>
+                        <!--<li>
                             <a class="active" href="<?php echo SINGLE_URL; ?>Dashboard/index">Ver productos básicos</a>
                         </li>
                         <li>
                             <a href="<?php echo SINGLE_URL; ?>Dashboard/product">Ver productos Premium</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
                 <!-- /#sidebar-wrapper -->
@@ -53,52 +61,39 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h1>VENDA + FACIL - TEST <?php echo $this->test; ?></h1>
+                                <h1>VENDA + FACIL - TEST <?php //echo $this->test; ?></h1>
                                 <p>Crud of Categories</p>
                                 <div class="container mx-0 px-0">
                                     <div class="row">
 
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mt-4">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Special title treatment</h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!-- Productos List -->
+                                        <!-- programación defensiva para cuando NO hayan productos -->
+                                        <?php if(empty($this->productosList)) :?>
+                                            <div>No hay productos creados en la base de datos</div>
+                                        <?php else: ?>
+                                            <?php foreach($this->productosList as $prod) :?>
+                                                <?php if($prod->prod_estado == 1): ?>
 
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mt-4">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Special title treatment</h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mt-4 mb-4">
+                                                        <div class="card shadow bg-light">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Nombre: <?= $prod->prod_nombres?></h5>
+                                                                <p class="card-text"><?= $prod->prod_descripcion?></p>
+                                                                <p>Categoría: <?= $prod->nombreCategoria?></p>
+                                                                <p>Precio:  $ <span class="badge badge-success"><?= number_format($prod->prod_precio_publicacion, 0, '', '.'); ?>  COP</span></p>                                                              
+                                                                <!-- Ocultos -->
+                                                                <input type="hidden" id="idProd" value="<?= $prod->prod_id_pk; ?>">
+                                                                <input type="hidden" id="pesoProd" value="<?= $prod->prod_peso; ?>">
+                                                                <input type="hidden" id="precioProd" value="<?= $prod->prod_precio_usd; ?>">
+                                                                <input type="hidden" id="tipoPublicacion" value="<?= $prod->prod_tipo_publicacion; ?>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
 
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mt-4">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Special title treatment</h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mt-4">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Special title treatment</h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>

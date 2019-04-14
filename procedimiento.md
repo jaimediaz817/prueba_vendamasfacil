@@ -40,5 +40,14 @@
 # PHP MAILER
  php composer.phar require phpmailer/phpmailer
 
+
+# Pruebas unitarias
+instalación:
+
+- descargué este fichero
+phpunit-8.1.2.phar
+
+php composer.phar require --dev phpunit/phpunit ^7.0
+php composer.phar require --dev phpunit/phpunit ^8
  
 

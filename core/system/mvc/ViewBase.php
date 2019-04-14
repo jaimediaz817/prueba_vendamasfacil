@@ -2,6 +2,9 @@
 
 namespace camaleon\mvc;
 
+//   S E S S I O N
+use camaleon\helpers\SessionApp;
+
 class ViewBase {
     public function renderView($controller,$view, $title, $methodValController = false) {
 
@@ -21,16 +24,19 @@ class ViewBase {
 
             // Session validate
             session_start();
-            // if (!isset($_SESSION['nickUser'])) {
-            //     include "./views/Index/index.php";
-            // } else {
+            if (!isset($_SESSION['nickUser'])) {            
+                $path = "./views/Index/index.php";
+                include $path;
+                //header("Location: ". SINGLE_URL . "Index/index");                
+            } else {
             //     if ($controlador !== "Index" && $view !== "index") {
             //         include $path . ".php";
             //     } else if ($controlador == "Dashboard" && $view == "index") {
             //         header("Location: ". SINGLE_URL . "Dashboard/index");
             //     }
-            // }
-            include $path . ".php";
+                include $path . ".php";
+            }
+            
 
         } else if (file_exists($path . ".html")) {
             if ($title !== '') {
