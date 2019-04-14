@@ -55,7 +55,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h1>VENDA + FACIL - PRODUCTOS <?php echo $x = round(407736.016)/1000*1000; echo "<br>"; echo round($x, -3); //imprime900 ?></h1>
+                                <h1>VENDA + FACIL - PRODUCTOS <?php //echo $x = round(407736.016)/1000*1000; echo "<br>"; echo round($x, -3); //imprime900 ?></h1>
 
                                 <div class="container mx-0 px-0">
                                     <div class="row">
@@ -164,7 +164,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-7">
+                                        <div class="col-7 px-0">
                                         <?php if(empty($this->productoList)) :?>
                                             <div>No hay productos creados en la base de datos</div>
                                         <?php else: ?>
@@ -184,9 +184,9 @@
                                                         <?php if($val->prod_estado != 0): ?>
                                                         <tr>
                                                             <td><?= $val->prod_id_pk ?></td>
-                                                            <td><?= $val->prod_nombres ?></td>
+                                                            <td class="small"><?= $val->prod_nombres ?></td>
                                                             <td><span>$ </span><?= $val->prod_precio_usd ?> <span class="small" style="color: #dc3545;"> USD</span></td>
-                                                            <td><?= $val->nombreCategoria ?></td> 
+                                                            <td class="small"><?= $val->nombreCategoria ?></td> 
                                                             <td>
                                                                 <a href="#" data-id="<?= $val->prod_id_pk;?>" class=" btn btn-success edit-product tipo-small">Editar</a>
                                                                 <a href="#" data-id="<?= $val->prod_id_pk;?>" class="btn btn-danger delete-product tipo-small">Eliminar/Finalizar</a>
