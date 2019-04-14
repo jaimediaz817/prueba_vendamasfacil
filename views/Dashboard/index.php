@@ -102,7 +102,7 @@
                                                                     </a>
                                                                 <?php endif; ?>
                                                                 
-                                                                <a href="#" class="btn btn-danger">Finalizar</a>                                                                
+                                                                <a href="#" class="btn btn-danger delete-product" data-id="<?= $prod->prod_id_pk;?>">Finalizar</a>                                                                
                                                                 <!-- Ocultos -->
                                                                 <input type="hidden" id="idProd" value="<?= $prod->prod_id_pk; ?>">
                                                                 <input type="hidden" id="pesoProd" value="<?= $prod->prod_peso; ?>">

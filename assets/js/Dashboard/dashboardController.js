@@ -72,6 +72,7 @@
                     console.log("response: ", response);
                     if (response.res == "success") {
                         showAlert($(".alert alert-success"));
+                        alert("¡Categiría almacenada correctamente!");
                         location.reload();
                     }
                 },
@@ -93,7 +94,7 @@
             $("#categoryName").val(name);
             objEdit.id = categoryId
             objEdit.name = name
-            alert("datos: "+ categoryId + "  ,  "+ name);
+            //alert("datos: "+ categoryId + "  ,  "+ name);
         }
     });
 
@@ -103,7 +104,7 @@
         var formData = new FormData();
         formData.append('id', objEdit.id);
         formData.append('categoryname', $("#categoryName").val());
-        console.log("data json: "+ objEdit.name + " , " + objEdit.id + ", " + URL_SINGLE);
+        //console.log("data json: "+ objEdit.name + " , " + objEdit.id + ", " + URL_SINGLE);
 
         $.ajax({
             url: URL_SINGLE + 'Dashboard/editCategory',
@@ -115,10 +116,9 @@
             success: function(response){
                 console.log("response: ", response);
                 if (response.res == "success") {
-                    console.log("edit ok");
                     disabledEdit();
                     enabledSave();
-                    alert("Updated Category!");
+                    alert("¡Categoría actualizada correctamente!");
                     showAlert($(".alert alert-success"), true);
                 }
             },
@@ -152,7 +152,7 @@
                             console.log("delete ok");
                             disabledEdit();
                             enabledSave();
-                            alert("Deleted Category!");
+                            alert("¡Categoría eliminada correctamente!");
                             showAlert($(".alert alert-success"), true);
                         }
                     },
@@ -210,7 +210,42 @@
         let tipoPublicacion = $(this).parent().find("#tipoPublicacion").val();
         // calculando TRM
         let valorTRM = getTRMSimple(id, precio, peso, tipoPublicacion);      
-    });      
+    });
+
+    // ELIMINAR / FINALIZAR producto
+    // Eliminado lógico del producto / finalizar
+    $(".delete-product").on("click", function() {
+        console.log("eliminar")
+        let idData = $(this).attr("data-id");
+
+        let confirmEdit = confirm("¿Realmente desea eliminar este producto?")
+        if (confirmEdit) {
+            // ajax request
+            var formData = new FormData();
+            formData.append('idProduct', idData);
+            $.ajax({
+                url: URL_SINGLE + 'Producto/deleteProductRequest',
+                type: 'POST',
+                data:  formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,            
+                success: function(response){
+                    console.log("response: ", response);
+                    if (response.res == true || response.res == 1) {
+                        enabledSaveProduct();
+                        disabledEditProduct();
+                        alert("¡Producto elimiado!");
+                        showAlert($(".alert alert-success"), true);
+                    }
+                },
+                error: function(err) {
+                    console.log("err : "+ err);
+                }
+            });
+        }
+    });
+
 
     // Retorna el TRM actual mediante la API
     async function  getTRMSimple(id, precio, peso, tipoPublicacion) {
